@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../conditional/conditional.dart';
@@ -55,7 +56,11 @@ class Message extends StatelessWidget {
     required this.usePreviewData,
     this.userAgent,
     this.videoMessageBuilder,
+    required this.showMessageCreateTime,
   });
+
+  /// To display message create time.
+  final bool showMessageCreateTime;
 
   /// Build an audio message inside predefined bubble.
   final Widget Function(types.AudioMessage, {required int messageWidth})?
@@ -206,6 +211,10 @@ class Message extends StatelessWidget {
     bool currentUserIsAuthor,
     bool enlargeEmojis,
   ) {
+    final messageCreateTime = DateFormat('MM:ss', 'en').format(
+      DateTime.fromMicrosecondsSinceEpoch(message.createdAt ?? 0),
+    );
+
     final defaultMessage = (enlargeEmojis && hideBackgroundOnEmojiMessages)
         ? _messageBuilder()
         : Container(
@@ -221,13 +230,37 @@ class Message extends StatelessWidget {
               child: _messageBuilder(),
             ),
           );
+
     return bubbleBuilder != null
-        ? bubbleBuilder!(
-            _messageBuilder(),
-            message: message,
-            nextMessageInGroup: roundBorder,
+        ? Column(
+            children: [
+              bubbleBuilder!(
+                _messageBuilder(),
+                message: message,
+                nextMessageInGroup: roundBorder,
+              ),
+              if (!roundBorder && showMessageCreateTime)
+                Text(
+                  messageCreateTime,
+                  style:
+                      InheritedChatTheme.of(context).theme.messageTimeTextStyle,
+                ),
+            ],
           )
-        : defaultMessage;
+        : Column(
+            crossAxisAlignment: currentUserIsAuthor
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: [
+              defaultMessage,
+              if (!roundBorder && showMessageCreateTime)
+                Text(
+                  messageCreateTime,
+                  style:
+                      InheritedChatTheme.of(context).theme.messageTimeTextStyle,
+                ),
+            ],
+          );
   }
 
   Widget _messageBuilder() {

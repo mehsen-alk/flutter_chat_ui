@@ -114,6 +114,7 @@ abstract class ChatTheme {
     required this.userAvatarNameColors,
     required this.userAvatarTextStyle,
     required this.userNameTextStyle,
+    required this.messageTimeTextStyle,
     this.highlightMessageColor,
   });
 
@@ -200,6 +201,9 @@ abstract class ChatTheme {
 
   /// Text style used for displaying emojis on text messages.
   final TextStyle receivedEmojiMessageTextStyle;
+
+  /// Text style used for displaying emojis on text messages.
+  final TextStyle messageTimeTextStyle;
 
   /// Body text style used for displaying bold text on received text messages.
   /// Default to a bold version of [receivedMessageBodyTextStyle].
@@ -481,6 +485,7 @@ class DefaultChatTheme extends ChatTheme {
       height: 1.333,
     ),
     super.highlightMessageColor,
+    super.messageTimeTextStyle = const TextStyle(),
   });
 }
 
@@ -655,5 +660,6 @@ class DarkChatTheme extends ChatTheme {
       height: 1.333,
     ),
     super.highlightMessageColor,
+    super.messageTimeTextStyle = const TextStyle(),
   });
 }

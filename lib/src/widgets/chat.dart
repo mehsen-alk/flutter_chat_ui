@@ -103,7 +103,11 @@ class Chat extends StatefulWidget {
     this.slidableMessageBuilder,
     this.isLeftStatus = false,
     this.messageWidthRatio = 0.72,
+    this.showMessageCreateTime = true,
   });
+
+  /// To display message create time.
+  final bool showMessageCreateTime;
 
   /// See [Message.audioMessageBuilder].
   final Widget Function(types.AudioMessage, {required int messageWidth})?
@@ -380,7 +384,7 @@ class ChatState extends State<Chat> {
     Duration? scrollDuration,
     bool withHighlight = false,
     Duration? highlightDuration,
-    AutoScrollPosition? preferPosition
+    AutoScrollPosition? preferPosition,
   }) async {
     await _scrollController.scrollToIndex(
       chatMessageAutoScrollIndexById[id]!,
@@ -480,6 +484,7 @@ class ChatState extends State<Chat> {
                     maxWidth,
                   ).floor();
         final Widget msgWidget = Message(
+          showMessageCreateTime: widget.showMessageCreateTime,
           audioMessageBuilder: widget.audioMessageBuilder,
           avatarBuilder: widget.avatarBuilder,
           bubbleBuilder: widget.bubbleBuilder,
