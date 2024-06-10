@@ -203,7 +203,7 @@ abstract class ChatTheme {
   final TextStyle receivedEmojiMessageTextStyle;
 
   /// Text style used for displaying emojis on text messages.
-  final TextStyle messageTimeTextStyle;
+  final TextStyle? messageTimeTextStyle;
 
   /// Body text style used for displaying bold text on received text messages.
   /// Default to a bold version of [receivedMessageBodyTextStyle].
