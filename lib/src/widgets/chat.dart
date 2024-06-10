@@ -110,7 +110,7 @@ class Chat extends StatefulWidget {
   /// To display message create time.
   final bool showMessageCreateTime;
 
-  final Widget Function(types.Message, {required int messageWidth})?
+  final Widget Function(types.Message message, {required int messageWidth})?
       messageCreateTimeBuilder;
 
   /// See [Message.audioMessageBuilder].

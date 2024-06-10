@@ -64,7 +64,7 @@ class Message extends StatelessWidget {
   final bool showMessageCreateTime;
 
   /// Build an audio message inside predefined bubble.
-  final Widget Function(types.Message, {required int messageWidth})?
+  final Widget Function(types.Message message, {required int messageWidth})?
       messageCreateTimeBuilder;
 
   /// Build an audio message inside predefined bubble.
@@ -265,11 +265,17 @@ class Message extends StatelessWidget {
             children: [
               defaultMessage,
               if (!roundBorder && showMessageCreateTime)
-                Text(
-                  messageCreateTime,
-                  style:
-                      InheritedChatTheme.of(context).theme.messageTimeTextStyle,
-                ),
+                messageCreateTimeBuilder == null
+                    ? Text(
+                        messageCreateTime,
+                        style: InheritedChatTheme.of(context)
+                            .theme
+                            .messageTimeTextStyle,
+                      )
+                    : messageCreateTimeBuilder!(
+                        message,
+                        messageWidth: messageWidth,
+                      ),
             ],
           );
   }
