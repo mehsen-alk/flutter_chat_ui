@@ -57,10 +57,15 @@ class Message extends StatelessWidget {
     this.userAgent,
     this.videoMessageBuilder,
     required this.showMessageCreateTime,
+    required this.messageCreateTimeBuilder,
   });
 
   /// To display message create time.
   final bool showMessageCreateTime;
+
+  /// Build an audio message inside predefined bubble.
+  final Widget Function(types.Message, {required int messageWidth})?
+      messageCreateTimeBuilder;
 
   /// Build an audio message inside predefined bubble.
   final Widget Function(types.AudioMessage, {required int messageWidth})?
@@ -240,11 +245,17 @@ class Message extends StatelessWidget {
                 nextMessageInGroup: roundBorder,
               ),
               if (!roundBorder && showMessageCreateTime)
-                Text(
-                  messageCreateTime,
-                  style:
-                      InheritedChatTheme.of(context).theme.messageTimeTextStyle,
-                ),
+                messageCreateTimeBuilder == null
+                    ? Text(
+                        messageCreateTime,
+                        style: InheritedChatTheme.of(context)
+                            .theme
+                            .messageTimeTextStyle,
+                      )
+                    : messageCreateTimeBuilder!(
+                        message,
+                        messageWidth: messageWidth,
+                      ),
             ],
           )
         : Column(

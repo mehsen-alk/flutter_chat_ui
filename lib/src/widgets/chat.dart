@@ -104,10 +104,14 @@ class Chat extends StatefulWidget {
     this.isLeftStatus = false,
     this.messageWidthRatio = 0.72,
     this.showMessageCreateTime = true,
+    this.messageCreateTimeBuilder,
   });
 
   /// To display message create time.
   final bool showMessageCreateTime;
+
+  final Widget Function(types.Message, {required int messageWidth})?
+      messageCreateTimeBuilder;
 
   /// See [Message.audioMessageBuilder].
   final Widget Function(types.AudioMessage, {required int messageWidth})?
@@ -484,6 +488,7 @@ class ChatState extends State<Chat> {
                     maxWidth,
                   ).floor();
         final Widget msgWidget = Message(
+          messageCreateTimeBuilder: widget.messageCreateTimeBuilder,
           showMessageCreateTime: widget.showMessageCreateTime,
           audioMessageBuilder: widget.audioMessageBuilder,
           avatarBuilder: widget.avatarBuilder,
