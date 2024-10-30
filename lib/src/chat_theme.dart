@@ -61,6 +61,7 @@ abstract class ChatTheme {
     required this.backgroundColor,
     this.bubbleMargin,
     required this.dateDividerMargin,
+    required this.chatContentMargin,
     required this.dateDividerTextStyle,
     required this.deliveredIcon,
     required this.documentIcon,
@@ -132,6 +133,9 @@ abstract class ChatTheme {
 
   /// Margin around date dividers.
   final EdgeInsets dateDividerMargin;
+
+  /// Margin inside chat area.
+  final EdgeInsets chatContentMargin;
 
   /// Text style of the date dividers.
   final TextStyle dateDividerTextStyle;
@@ -329,6 +333,9 @@ class DefaultChatTheme extends ChatTheme {
       bottom: 32,
       top: 16,
     ),
+    super.chatContentMargin = const EdgeInsets.only(
+      bottom: 4,
+    ),
     super.dateDividerTextStyle = const TextStyle(
       color: neutral2,
       fontSize: 12,
@@ -503,6 +510,9 @@ class DarkChatTheme extends ChatTheme {
     super.dateDividerMargin = const EdgeInsets.only(
       bottom: 32,
       top: 16,
+    ),
+    super.chatContentMargin = const EdgeInsets.only(
+      bottom: 4,
     ),
     super.dateDividerTextStyle = const TextStyle(
       color: neutral7,
